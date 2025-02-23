@@ -1,7 +1,8 @@
 # provides functions and variales that manipulate python runtime env
 # so if any exception is getting controlled , it will have that info
+#import logging 
 import sys
-import logging
+from src.logger import logging
 
 def error_message_detail(error, error_detail : sys):
     # error detail will come from sys module
