@@ -29,7 +29,7 @@ class DataTransformation:
     def get_data_transformer_object(self):
         ''' it will create all pickle file that r responsible to perfoem different transformations on data '''
         try:
-            #numerical_columns = ['writing score', 'reading score', 'math score']
+            numerical_columns = ['writing score', 'reading score']
             categorical_columns = [
                 'gender',
                 'race/ethnicity',
@@ -38,13 +38,13 @@ class DataTransformation:
                 'test preparation course',
             ]
 
-            # num_pipeline = Pipeline(
-            #     steps=[
-            #         ("imputer",SimpleImputer(strategy='median')),
-            #         ("scaler", StandardScaler())
-            #     ]
-            # )
-            # logging.info("Numerical columns preprocessed")
+            num_pipeline = Pipeline(
+                steps=[
+                    ("imputer",SimpleImputer(strategy='median')),
+                    ("scaler", StandardScaler())
+                ]
+            )
+            logging.info("Numerical columns pipelined")
 
             cat_pipeline = Pipeline(
                 steps=[
@@ -54,14 +54,15 @@ class DataTransformation:
                 ]
             )
 
-            logging.info("Categorical columns encoded")
+            logging.info("Categorical columns pipelined")
 
             preprocessor = ColumnTransformer(
                 [
-                    # ("num_pipeline", num_pipeline, numerical_columns),
+                    ("num_pipeline", num_pipeline, numerical_columns),
                     ("cat_pipeline", cat_pipeline, categorical_columns)
                 ]
             )
+            logging.info("Categorical and numerical columns pipelines combined in a column transformer")
 
             return preprocessor
 
@@ -80,15 +81,15 @@ class DataTransformation:
 
             preprocessor = self.get_data_transformer_object()
 
-            target = "average_score"
-            # numerical_columns = ['writing score', 'reading score', 'math score']
-            # categorical_columns = [
-            #     'gender',
-            #     'race_ethnicity',
-            #     'parental_level_of_education',
-            #     'lunch',
-            #     'test_preparation_course',
-            # ]
+            target = "math score"
+            numerical_columns = ['writing score', 'reading score']
+            categorical_columns = [
+                'gender',
+                'race/ethnicity',
+                'parental level of education',
+                'lunch',
+                'test preparation course',
+            ]
 
             input_train_df = train_df.drop(target, axis = 1)
             target_train_df = train_df[[target]]
@@ -104,6 +105,7 @@ class DataTransformation:
 
             input_feature_train_arr = preprocessor.fit_transform(input_train_df)
             input_feature_test_arr = preprocessor.transform(input_test_df)
+
             # print(input_feature_train_arr.toarray())
 
             #print(input_feature_train_arr.shape, target_train_df.shape)
@@ -126,11 +128,11 @@ class DataTransformation:
                 )
 
             train_arr = np.c_[
-                input_feature_train_arr.toarray(), target_train_df.to_numpy().reshape(-1, 1)
+                input_feature_train_arr, target_train_df.to_numpy().reshape(-1, 1)
             ]
 
             test_arr = np.c_[
-                input_feature_test_arr.toarray(), target_test_df.to_numpy().reshape(-1, 1)
+                input_feature_test_arr, target_test_df.to_numpy().reshape(-1, 1)
             ]
             # train_arr = np.column_stack(
             #     (input_feature_train_arr, target_train_df.to_numpy().reshape(-1, 1))
@@ -166,7 +168,7 @@ class DataTransformation:
             raise CustomException(e, sys)
         
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
     # get_data = DataIngestion()
     # train_data_path, test_data_path = get_data.initiate_data_ingestion()
 
@@ -177,5 +179,5 @@ if __name__ == "__main__":
     # )
 
     # print(train_arr[:10,:])
-    pass
+    # pass
 

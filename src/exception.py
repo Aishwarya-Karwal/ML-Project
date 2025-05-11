@@ -7,9 +7,14 @@ from src.logger import logging
 def error_message_detail(error, error_detail : sys):
     # error detail will come from sys module
     _,_,exc_tb = sys.exc_info()
+
     # exc_tb is the traceback object
-    file_name = exc_tb.tb_frame.f_code.co_filename
-    error_message = "Error occured in python script name [{0}] line number [{1}] error message [{2}]".format(file_name, exc_tb.tb_lineno, str(error))
+    if exc_tb is not None:
+        file_name = exc_tb.tb_frame.f_code.co_filename
+        error_message = "Error occured in python script name [{0}] line number [{1}] error message [{2}]".format(file_name, exc_tb.tb_lineno, str(error))
+    else:
+        error_message = f"Error message : [{str(error)}]"
+        
     return error_message
 
 # Inherits from Python’s built-in Exception class, meaning it behaves like a normal exception but with custom behavior.

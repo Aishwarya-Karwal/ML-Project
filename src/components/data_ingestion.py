@@ -10,6 +10,10 @@ from dataclasses import dataclass
 
 from src.components.data_transformation import DataTransformation
 from src.components.data_transformation import DataTransformationConfig
+from src.components.model_trainer import ModelTrainerConfig
+from src.components.model_trainer import ModelTrainer
+
+
 
 # when u just have to define the inputs to the class then 
 # use dataclass otherwiae use class with init method
@@ -37,9 +41,9 @@ class DataIngestion:
             logging.info('Saved the raw data')
 
             logging.info('initiated train test split')
-            df['average_score'] = df[['math score', 'reading score', 'writing score']].mean(axis = 1).round(2)
-            df.drop(columns = ['math score', 'reading score', 'writing score'], inplace = True)
-            logging.info('created average score column as our target and removed individual scores')
+            # df['average_score'] = df[['math score', 'reading score', 'writing score']].mean(axis = 1).round(2)
+            # df.drop(columns = ['math score', 'reading score', 'writing score'], inplace = True)
+            # logging.info('created average score column as our target and removed individual scores')
 
             train, test = train_test_split(df, random_state=42, test_size=0.2)
 
@@ -63,7 +67,10 @@ if __name__ == "__main__":
     train_data , test_data = obj.initiate_data_ingestion()
 
     data_transformation = DataTransformation()
-    data_transformation.initiate_data_transormation(train_data,test_data)
+    train_arr, test_arr, _ = data_transformation.initiate_data_transormation(train_data,test_data)
+
+    modeltrainer = ModelTrainer()
+    print(modeltrainer.initiate_model_trainer(train_arr, test_arr))
     
 
     
