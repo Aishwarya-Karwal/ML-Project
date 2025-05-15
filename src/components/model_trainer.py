@@ -2,6 +2,7 @@ import os
 import sys
 
 from dataclasses import dataclass
+import yaml
 
 from catboost import CatBoostRegressor
 from sklearn.ensemble import (
@@ -51,7 +52,13 @@ class ModelTrainer:
                 "AdaBoostRegressor": AdaBoostRegressor(),
             }
 
-            model_report: dict = evaluate_models(X_train, y_train, X_test, y_test, models)
+            with open("src\config\model_params.yaml", "r") as file:
+                param_grid = yaml.safe_load(file)
+                logging.info("Loading model parameters from config file")
+                
+            logging.info(f"Model parameters: {param_grid}")
+
+            model_report: dict = evaluate_models(X_train, y_train, X_test, y_test, models, param_grid)
 
             logging.info(f"Model report: {model_report}")
             
