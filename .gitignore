@@ -129,7 +129,7 @@ celerybeat.pid
 
 # Environments
 # .artifacts - dot vala version ignores hidden files and folders
-artifacts/
+# artifacts/
 .env
 .venv
 env/
