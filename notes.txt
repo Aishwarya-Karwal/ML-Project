@@ -1,0 +1,58 @@
+## For deployment 
+
+Paid Options : 
+
+Option 1 - AWS codepipeline - it employs continuous delivery, we create the instance of machine in elastic beanstalk and connect it to github using a aws codepipeline. so whenever a change is pushed in github it triggers a button to allow us to deploy the change 
+– AWS CodePipeline with Elastic Beanstalk
+Overview:
+AWS CodePipeline is a fully managed continuous integration and continuous delivery (CI/CD) service. You can automate your release pipelines for fast and reliable application and infrastructure updates.
+How it works:
+Set up an Elastic Beanstalk environment to host your application.
+Connect your GitHub repository to AWS CodePipeline.
+Whenever you push changes to GitHub, CodePipeline automatically detects the update.
+The pipeline builds, tests, and deploys your application to the Elastic Beanstalk instance.
+You can configure manual approval steps if needed before deployment.
+Benefits:
+Fully managed, scalable, and integrates well with other AWS services.
+Supports blue/green deployments and rollbacks.
+
+Option 2 – Azure with GitHub Actions
+Overview:
+Azure supports CI/CD using GitHub Actions, which are workflows that automate build, test, and deployment tasks.
+How it works:
+Create a workflow YAML file in your GitHub repository.
+Define steps for building, testing, and deploying your application to Azure services (e.g., Azure App Service, Azure Container Instances).
+On every push or pull request, GitHub Actions runs the workflow and deploys your app.
+Benefits:
+Native integration with GitHub.
+Flexible and supports deployment to many Azure services.
+Free tier available with limited minutes.
+
+
+Option 3 – AWS with Production CI/CD Pipelines (Docker)
+Overview:
+Use AWS services (like CodeBuild, CodeDeploy, ECS, or EKS) to set up a production-grade CI/CD pipeline using Docker containers.
+How it works:
+Containerize your application using Docker.
+Push Docker images to Amazon Elastic Container Registry (ECR).
+Use AWS CodePipeline/CodeBuild to automate building and testing Docker images.
+Deploy containers to AWS ECS (Elastic Container Service) or EKS (Elastic Kubernetes Service).
+Benefits:
+Highly scalable and production-ready.
+Supports microservices and complex deployment strategies.
+Good for teams familiar with Docker and container orchestration.
+
+
+Free Option 
+
+Render (to be studied)
+Overview:
+Render is a cloud platform that offers free hosting for web services, static sites, and background workers.
+How it works:
+Connect your GitHub repository to Render.
+Configure your build and start commands.
+Render automatically deploys your app on every push.
+Benefits:
+Free tier available for small projects.
+Simple setup and automatic HTTPS.
+Good for prototypes, personal projects, or demos.
